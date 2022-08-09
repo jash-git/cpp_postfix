@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0057)http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/stack2.htm -->
+<html lang="zh-tw" style=""><head><meta http-equiv="Content-Type" content="text/html; charset=Big5">
+<title>四則運算　VS Stack</title></head>
+<body style="color: black; background-color: rgb(220, 240, 250);" alink="red" link="blue" vlink="purple">
+<div style="text-align: center;"><big><big><big><big><big>四
+則運算　VS Stack<br>
+</big></big></big></big></big></div>
+<br>
+<ul>
+<li style="background-color: rgb(236, 236, 236);"><span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Arial; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: medium;"><span class="Apple-style-span" style="font-family: serif; font-size: 13px;">
+<h1 style="border-color: rgb(183, 132, 31); border-left: 10px solid rgb(183, 132, 31); border-bottom: 1px solid rgb(183, 132, 31); margin: 1.25em 49px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(183, 132, 31); font-size: large;"><a href="http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/AlgorithmGossip.htm" style="color: rgb(68, 68, 68); font-weight: bold; text-decoration: none;">認
+識
+PreFix、InFix、PostFix
+</a></h1>
+</span></span></li>
+</ul>
+<br>
+<div style="margin-left: 40px;">PreFix（前序式）：* + 1 2 + 3 4<br>
+<br>
+InFix（中序式）： (1+2)*(3+4)<br>
+<br>
+PostFix（後序式）：1 2 + 3 4 + *<br>
+</div>
+<br>
+<ul>
+<li style="background-color: rgb(236, 236, 236);"><span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Arial; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: medium;"><span class="Apple-style-span" style="font-family: serif; font-size: 13px;">
+<h1 style="border-color: rgb(183, 132, 31); border-left: 10px solid rgb(183, 132, 31); border-bottom: 1px solid rgb(183, 132, 31); margin: 1.25em 49px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(183, 132, 31); font-size: large;"><a href="http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/AlgorithmGossip.htm" style="color: rgb(68, 68, 68); font-weight: bold; text-decoration: none;">後
+序式的運算</a></h1>
+</span></span></li>
+</ul>
+<big style="font-family: Arial;"><big>說明：將中序式轉換為後序式
+的好處是，不用處理運算子先後順序問題，只要依序由運算式由前往後讀取即可。</big></big><br>
+<br>
+<big><big><span style="font-weight: bold;">例如：</span></big></big><br>
+<span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Arial; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: medium;"><span class="Apple-style-span" style="font-family: serif; text-align: left;"><big>運算時由
+後序式的前方開始讀取，遇到運算元先存入堆疊，如果遇到運算子，則由堆疊中取出兩個運算元進行對應的運算，然後將結果存回堆疊，如果運算式讀取完
+畢，那麼堆疊頂的值就是答案了，例如我們計算12+34+*這個運算式（也就是(1+2)*(3+4)）：</big>
+<table border="1" width="50%">
+<tbody>
+<tr>
+<td align="left" valign="top"><small>讀取</small></td>
+<td align="left" valign="top"><small>堆疊</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>1</small></td>
+<td align="left" valign="top"><small>1</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>2</small></td>
+<td align="left" valign="top"><small>1 2</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>+</small></td>
+<td align="left" valign="top"><small>3
+// 1+2 後存回</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>3</small></td>
+<td align="left" valign="top"><small>3 3</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>4</small></td>
+<td align="left" valign="top"><small>3
+3 4</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>+</small></td>
+<td align="left" valign="top"><small>3
+7 // 3+4 後存回</small></td>
+</tr>
+<tr>
+<td align="left" valign="top"><small>*</small></td>
+<td align="left" valign="top"><small>21
+// 3 * 7 後存回</small></td>
+</tr>
+</tbody>
+</table>
+</span></span><br>
+<span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Arial; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: medium;"><span class="Apple-style-span" style="font-family: serif; font-size: 13px;">
+<h1 style="border-color: rgb(183, 132, 31); border-left: 10px solid rgb(183, 132, 31); border-bottom: 1px solid rgb(183, 132, 31); margin: 1.25em 49px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(183, 132, 31); font-size: large;"><a href="http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/AlgorithmGossip.htm" style="color: rgb(68, 68, 68); font-weight: bold; text-decoration: none;">Algorithm
+Gossip: 中序式轉後序式（前序式）</a></h1>
+<table style="text-align: left; width: 946px; height: 32px;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 676px; vertical-align: top;">
+<h2 style="border-color: rgb(0, 102, 0); border-left: 10px solid rgb(0, 102, 0); border-bottom: 1px solid rgb(0, 102, 0); margin: 1.25em 103px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(0, 102, 0); font-size: medium;">說
+明</h2>
+<big>平常所使用的運算式，主要是將運算元放在運算子的兩旁，例如a+b/d這樣的式子，這稱之為中序（Infix）表示
+式，對於人類來說，這樣的式子很容易理
+解，但由於電腦執行指令時是有順序的，遇到中序表示式時，無法直接進行運算，而必須進一步判斷運算的先後順序，所以必須將中序表示式轉換為另一種表示方
+法。<br>
+<br>
+可以將中序表示式轉換為後序（Postfix）表示式，後序表示式又稱之為逆向波蘭表示式（Reverse polish
+notation），它是由波蘭的數學家盧卡謝維奇提出，例如(a+b)*(c+d)這個式子，表示為後序表示式時是ab+cd+*。<big><span class="Apple-converted-space">&nbsp;</span></big></big><br>
+<h2 style="border-color: rgb(0, 102, 0); border-left: 10px solid rgb(0, 102, 0); border-bottom: 1px solid rgb(0, 102, 0); margin: 1.25em 103px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(0, 102, 0); font-size: medium;">解
+法</h2>
+<big><big>用手算的方式來計算後序式相當的簡單，將運算子兩旁的運算元依先後順序全括號起來，然後將所有
+的右括號取代為左邊最接近的運算子（從最內層括號開始），最後去掉所有的左括號就可以完成後序表示式，例如：<br>
+</big></big>
+<div style="margin-left: 40px;"><big><big><span style="font-weight: bold; font-family: &#39;Courier New&#39;,Courier,monospace;">a+b*d+c/d
+&nbsp; =&gt;&nbsp; &nbsp; ((a+(b*d))+(c/d)) -&gt;
+abd*+cd/+</span><br>
+</big></big></div>
+<big><big><br>
+如果要用程式來進行中序轉後序，則必須使用堆疊，演算法很簡單，直接敘述的話就是使用迴圈，取出中序式的字元，遇運算元直接輸出；堆疊運算子與左括號；
+堆疊中運算子優先順序大於讀入的運算子優先順序的話，直接輸出堆疊中的運算子，再將讀入的運算子置入堆疊；遇右括號輸出堆疊中的運算子至左括號。<span class="Apple-converted-space">&nbsp;</span></big></big><br>
+<br>
+<h2 style="border-color: rgb(0, 102, 0); border-left: 10px solid rgb(0, 102, 0); border-bottom: 1px solid rgb(0, 102, 0); margin: 1.25em 103px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(0, 102, 0); font-size: medium;">演
+算法</h2>
+<big><big>以下是虛擬碼的運算法，\0表示中序式讀取完畢：<span class="Apple-converted-space">&nbsp;</span></big></big><br>
+<pre style="border: 1px solid rgb(119, 119, 119); margin: 3px 25px; padding: 0px 10px; color: rgb(51, 51, 51); background-color: rgb(238, 238, 238); font-size: small; font-weight: normal; line-height: 17px; width: auto; font-family: &#39;Courier New&#39;,Courier,monospace;">Procedure Postfix(infix) [<br> Loop [<br> op = infix(i) <br> case [<br> :x = '\0': <br> while (stack not empty) <br> // output all elements in stack <br> end <br> return <br> :x = '(': <br> // put it into stack <br> :x is operator: <br> while (priority(stack[top]) &gt;= <br> priority(op)) [<br> // out a element from stack <br> ]<br> // save op into stack <br> :x = ')': <br> while ( stack(top) != '(' ) [<br> // out a element from stack <br> ]<br> top = top - 1 // not out '( <br> :else: <br> // output current op <br> ]<br> i++; <br> ]<br>] <br></pre>
+<br>
+<big>例如(a+b)*(c+d)這個式子，依演算法的輸出過程如下：</big>
+<table border="1" width="50%">
+<tbody>
+<tr>
+<td align="left" valign="top"><big>OP</big></td>
+<td align="left" valign="top"><big>STACK</big></td>
+<td align="left" valign="top"><big>OUTPUT</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>(</big></td>
+<td align="left" valign="top"><big>(</big></td>
+<td align="left" valign="top"><big>-</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>a</big></td>
+<td align="left" valign="top"><big>(</big></td>
+<td align="left" valign="top"><big>a</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>+</big></td>
+<td align="left" valign="top"><big>(+</big></td>
+<td align="left" valign="top"><big>a</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>b</big></td>
+<td align="left" valign="top"><big>(+</big></td>
+<td align="left" valign="top"><big>ab</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>)</big></td>
+<td align="left" valign="top"><big>-</big></td>
+<td align="left" valign="top"><big>ab+</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>*</big></td>
+<td align="left" valign="top"><big>*</big></td>
+<td align="left" valign="top"><big>ab+</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>(</big></td>
+<td align="left" valign="top"><big>*(</big></td>
+<td align="left" valign="top"><big>ab+</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>c</big></td>
+<td align="left" valign="top"><big>*(</big></td>
+<td align="left" valign="top"><big>ab+c</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>+</big></td>
+<td align="left" valign="top"><big>*(+</big></td>
+<td align="left" valign="top"><big>ab+c</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>d</big></td>
+<td align="left" valign="top"><big>*(+</big></td>
+<td align="left" valign="top"><big>ab+cd</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>)</big></td>
+<td align="left" valign="top"><big>*</big></td>
+<td align="left" valign="top"><big>ab+cd+</big></td>
+</tr>
+<tr>
+<td align="left" valign="top"><big>-</big></td>
+<td align="left" valign="top"><big>-</big></td>
+<td align="left" valign="top"><big>ab+cd+*</big></td>
+</tr>
+</tbody>
+</table>
+<br>
+<big><big>如果要將中序式轉為前序式，則在讀取中序式時是由後往前讀取，而左右括號的處理方式相反，其餘
+不變，但輸出之前必須先置入堆疊，待轉換完成後再將堆疊中的 值由上往下讀出，如此就是前序表示式。<span class="Apple-converted-space">&nbsp;</span></big></big><br>
+</td>
+</tr>
+</tbody>
+</table>
+</span></span><br>
+<br>
+<span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Arial; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: medium;"><span class="Apple-style-span" style="font-family: serif; text-align: left;">
+<h2 style="border-color: rgb(0, 102, 0); border-left: 10px solid rgb(0, 102, 0); border-bottom: 1px solid rgb(0, 102, 0); margin: 1.25em 103px 0.5em 0px; padding: 0.25em 0px 0.25em 10px; font-weight: bold; color: rgb(0, 102, 0); font-size: medium;">實
+作：<a href="http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/stack2.htm#C" style="color: rgb(68, 68, 68); font-weight: bold; text-decoration: none;">C</a>++</h2>
+<ul style="margin-top: 3px; margin-bottom: 3px;">
+<li><a name="C"></a><span class="Apple-converted-space">&nbsp;</span>C++ <a href="http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/stack2.cpp">stack.cpp</a></li>
+</ul>
+<pre style="border: 1px solid rgb(119, 119, 119); margin: 3px 25px; padding: 0px 10px; color: rgb(51, 51, 51); background-color: rgb(238, 238, 238); font-size: small; font-weight: normal; line-height: 17px; width: auto; font-family: &#39;Courier New&#39;,Courier,monospace;">#include <stdio.h>
+#include <stdlib.h>
+#define N 50
+#define OP 5
+
+char op[OP] = {'(','+','-','*','/',};
+int op_priority[OP] = {0,1,1,2,2};//與op[OP]對應,用以存放運算子的優先順序
+
+int priority(char c);
+void to_postfix(char infix[], char postfix[]);
+
+
+char stack[N]; // This is a global variable.
+int top=-1;
+// -------------------------
+//  將資料 item 放入堆疊
+// -------------------------
+
+void push(char item){
+	if (top&gt;=N-1){
+		printf("Stack full!\n");
+		exit(-1);
+	}
+	stack[++top]=item;
+}
+// ------------------------------------ 
+// 傳回堆疊頂端的資料，但並非取出  
+// ------------------------------------ 
+int pop(){
+	if (top==-1){
+		printf("Stack empty!\n");
+		exit(-1);
+	}
+	return stack[top--];
+}
+
+void stackPrint(){
+	int i;
+	printf("stack =");
+	for (i=0; i&lt;=top; i++)
+		printf(" %c", stack[i]);
+	printf("\n");
+}
+
+// ----------------------
+// 判斷是否為空堆疊
+// ----------------------
+bool IsEmpty(void)
+{
+	return (top &lt; 0) ? true : false; 
+}
+
+// ----------------------
+//  判斷堆疊是否滿溢
+// ----------------------
+bool IsFull()
+{
+	return (top &gt;= N - 1) ? true : false;
+}
+
+// --------------------------
+// 傳回堆疊頂端的資料
+// --------------------------
+char top_data()
+{
+	return stack[top]; 
+}
+
+// ---------------------------
+// 傳回運算子 c 的優先序
+// ---------------------------
+int priority(char c)
+{
+	int i;
+	
+	for( i=0; i &lt; OP; i++)
+	if(op[i] == c)
+	return op_priority[i];
+	return -1;
+}
+
+// ------------------------------------
+// 將中置式infix轉成後置式postfix
+// ------------------------------------
+void to_postfix(char infix[], char postfix[])
+{
+	int i=0, j=-1;
+	char x, y;
+
+	while((x=infix[i++]) != '\0'){
+		switch(x){
+			case '(' : push(x);
+					   break;
+			case ')' : while(! IsEmpty() &amp;&amp; (x=pop()) != '(')
+						postfix[++j]=x;
+						break;
+			case '+' :
+			case '-' :
+			case '*' :
+			case '/' : y=top_data();
+					while(priority(y) &gt;= priority(x)){
+							postfix[++j]=pop();
+							y=top_data();
+					}
+					push(x);
+					break;
+			default : // x &#39819;綅呾啋
+					postfix[++j]=x;
+		}
+	}
+	while(! IsEmpty())
+		postfix[++j]=pop();
+	postfix[++j]='\0';
+}
+bool IsDight(char c)
+{
+	return c&gt;='0' &amp;&amp; c&lt;='9';
+}
+int calculate(char postfix[])
+{
+	int point=0;
+	while(postfix[point]!='\0')
+	{
+		while(IsDight(postfix[point]))
+			push(postfix[point++]);
+	int a=pop()-'0', b=pop()-'0',c=0;
+	switch(postfix[point])
+	{
+		case'+':c=b+a;
+				break;
+		case'-':c=b-a;
+				break;
+		case'*':c=b*a;
+				break;
+		case'/':c=b/a;
+				break;
+	}
+	push(c+'0');
+	point++;
+	}
+	return pop()-'0';
+}
+int main(void)
+{ 
+	char infix[50], postfix[50];
+
+	printf("請輸入運算式: ") ;
+	scanf("%s",infix);
+	to_postfix(infix,postfix); 
+	printf("\n\n中序式 : %s \t後序式 : %s\n",infix , postfix);
+	printf("答案： %d\n", calculate(postfix));
+	return 0;
+}
+</stdlib.h></stdio.h></pre>
+</span></span><br>
+<br>
+<br>
+
+</body></html>

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1660053031 source:c:\users\user\desktop\cpp_postfix\main.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+
